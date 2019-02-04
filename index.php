@@ -41,10 +41,10 @@ $tasks = [
   ],
 ];
 function count_tasks($project_name, $tasks) {
-  
+
   $num = 0;
   foreach ($tasks as $key => $value) {
-    if ($value['category'] === $project_name) {
+    if ((string)$value['category'] === (string)$project_name) {
       $num = $num+1;
     }
   }
