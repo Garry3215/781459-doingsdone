@@ -39,4 +39,6 @@ $tasks = [
     'done' => false
   ],
 ];
+
+$show_complete_tasks = rand(0, 1);
 ?>

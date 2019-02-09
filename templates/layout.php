@@ -1,20 +1,6 @@
 
 <!DOCTYPE html>
-<?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
 
-function count_tasks($project_name, $tasks) {
-
-  $num = 0;
-  foreach ($tasks as $key => $value) {
-    if ((string)$value['category'] === (string)$project_name) {
-      $num = $num + 1;
-    }
-  }
-  return $num;
-}
-?>
 
 <html lang="ru">
 

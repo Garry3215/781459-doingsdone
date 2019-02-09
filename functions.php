@@ -15,4 +15,15 @@ function include_template($name, $data) {
 
     return $result;
 }
+
+function count_tasks($project_name, $tasks) {
+
+  $num = 0;
+  foreach ($tasks as $key => $value) {
+    if ((string)$value['category'] === (string)$project_name) {
+      $num = $num + 1;
+    }
+  }
+  return $num;
+}
 ?>
