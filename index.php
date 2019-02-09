@@ -7,6 +7,7 @@ $page_content = include_template('index.php', [
   ]);
 $layout_content = include_template('layout.php', [
     'project_category' => $project_category,
+    'tasks' => $tasks,
     'content' => $page_content,
     'user_name' => 'Константин',
     'title' => 'Главная страница'
