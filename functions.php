@@ -26,4 +26,22 @@ function count_tasks($project_name, $tasks) {
   }
   return $num;
 }
+
+function date_check($project_date) {
+    $cur_date = strtotime("now");
+    $pr_date = strtotime($project_date);
+    $diff = $pr_date - $cur_date;
+    $diff = $diff / 86400;
+    if ($diff > 1) {
+        $diff = false;
+    }
+    elseif ($diff < -17000) {
+        $diff = false;
+    }
+    else {
+        $diff = true;
+    }
+    return($diff);
+    //-17 с лишним тысяч - временная метка для текста
+}
 ?>
