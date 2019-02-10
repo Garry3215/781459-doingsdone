@@ -42,7 +42,7 @@
       <?php if ($show_complete_tasks === 1 && $value['done']): ?>
 
       <?php else: ?>
-        <tr class="tasks__item task <?php if ($value['done']): ?>task--completed<?php endif ?>">
+        <tr class="tasks__item task <?php if ($value['done']): ?>task--completed<?php endif ?><?php if (date_check($value['date'])): ?>task--important<?php endif ?>">
           <td class="task__select">
             <label class="checkbox task__checkbox">
               <input class="checkbox__input visually-hidden" type="checkbox" <?php if ($value['done']): ?>checked<?php endif ?>>
