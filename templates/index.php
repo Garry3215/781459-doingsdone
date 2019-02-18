@@ -37,7 +37,7 @@
         <td class="task__date"></td>
     </tr>
     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-
+    <?php $tasks = user_tasks(1, $con); ?>
     <?php foreach ($tasks as $key => $value): ?>
       <?php if ($show_complete_tasks === 1 && $value['done']): ?>
 
@@ -49,7 +49,7 @@
               <span class="checkbox__text"><?=$value['name']; ?></span>
             </label>
           </td>
-          <td class="task__date"><?=$value['date']; ?></td>
+          <td class="task__date"><?=$value['date_must_done']; ?></td>
           <td class="task__controls">
           </tr>
         <?php endif; ?>

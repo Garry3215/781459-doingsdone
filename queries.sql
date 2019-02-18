@@ -1,11 +1,17 @@
 insert into users
-    set name = "Вова", email = "vova@mail.ru", password = "123456"
+    set name = "Вова", email = "vova@mail.ru", password = "123456";
+insert into users
     set name = "Саша", email = "sasha@mail.ru", password = "654321";
+
 insert into project
     set user_id = 1, name = "Входящие";
+insert into project
     set user_id = 1, name = "Учеба";
+insert into project
     set user_id = 1, name = "Работа";
+insert into project
     set user_id = 1, name = "Домашние дела";
+insert into project
     set user_id = 1, name = "Авто";
 
 
@@ -35,3 +41,15 @@ update task set status = 1 where id = 9;
 
 //обновить название задачи по её идентификатору.
 update task set name = "Сделать задание 21-го раздела" where id = 9;
+
+
+insert into project
+    set user_id = 2, name = "Учеба";
+insert into project
+    set user_id = 2, name = "Работа";
+
+
+      insert into task
+        set user_id = 2, project_id = 7, status = 0, name = "Сделать задание №1", date_must_done = "2019-02-20 00:00:00";
+      insert into task
+          set user_id = 2, project_id = 7, status = 0, name = "Поругаться с начальством", date_must_done = "2019-12-19 00:00:00";
