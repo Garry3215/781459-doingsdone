@@ -37,7 +37,7 @@
         <td class="task__date"></td>
     </tr>
     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-    <?php $tasks = user_tasks(1, $con); ?>
+    
     <?php foreach ($tasks as $key => $value): ?>
       <?php if ($show_complete_tasks === 1 && $value['done']): ?>
 

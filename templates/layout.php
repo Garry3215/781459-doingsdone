@@ -45,7 +45,7 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php $project_category = user_projects(1, $con); ?>
+                        
                         <?php foreach ($project_category as $key => $value): ?>
                           <li class="main-navigation__list-item">
                               <a class="main-navigation__list-item-link" href="#"><?=$value['name'];?></a>
