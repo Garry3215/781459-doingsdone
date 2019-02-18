@@ -44,4 +44,34 @@ function date_check($project_date) {
     return($diff);
     //-17 с лишним тысяч - временная метка для текста
 }
+
+//получение списка проектов у текущего пользователя
+function user_projects($user_id, $con) {
+    $sql = "select * from project where user_id = ";
+    $sql = $sql . $user_id;
+    $result = mysqli_query($con, $sql);
+    if (!$result) {
+        $error = mysqli_error($con);
+        print("Ошибка MySQL: " . $error);
+      }
+    $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return ($user_projects);
+}
+
+//получение списка из всех задач у текущего пользователя
+function user_tasks($user_id, $con) {
+  $sql = "select * from task where user_id = ";
+  $sql = $sql . $user_id;
+  $result = mysqli_query($con, $sql);
+  if (!$result) {
+      $error = mysqli_error($con);
+      print("Ошибка MySQL: " . $error);
+    }
+  $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  return ($user_projects);
+}
+
+
+
+
 ?>

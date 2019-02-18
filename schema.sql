@@ -12,7 +12,7 @@ CREATE table users (
 CREATE table project (
     id int auto_increment primary key,
     user_id int not null,
-    name char (128) unique
+    name char (128)
 );
 CREATE table task (
     id int auto_increment primary key,
