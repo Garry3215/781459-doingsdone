@@ -19,9 +19,9 @@ CREATE table task (
     user_id int not null,
     project_id int not null,
     date_add timestamp not null DEFAULT current_timestamp,
-    date_done timestamp not null,
+    date_done timestamp,
     status tinyint(2) DEFAULT 0 not null,
-    name char not null,
+    name text(1500) not null,
     file text(1500),
-    date_must_done timestamp not null
+    date_must_done timestamp
 );
