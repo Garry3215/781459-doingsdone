@@ -18,7 +18,7 @@
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
-            <a href="/">
+            <a href="/index.php">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
@@ -45,11 +45,12 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        
+
                         <?php foreach ($project_category as $key => $value): ?>
                           <li class="main-navigation__list-item">
-                              <a class="main-navigation__list-item-link" href="#"><?=$value['name'];?></a>
-                              <span class="main-navigation__list-item-count"><?php echo count_tasks($value, $tasks) ?></span>
+                              <a class="main-navigation__list-item-link" href="/index.php?project_id=<?=$value['id']?>"><?=$value['name'];?></a>
+                              <span class="main-navigation__list-item-count"><?php echo count_tasks($value['id'], $tasks) ?></span>
+
                           </li>
                         <?php endforeach; ?>
 
