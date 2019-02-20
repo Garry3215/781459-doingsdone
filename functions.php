@@ -41,7 +41,7 @@ function date_check($project_date) {
     else {
         $diff = true;
     }
-    return($diff);
+    return $diff;
     //-17 с лишним тысяч - временная метка для текста
 }
 
@@ -55,7 +55,7 @@ function user_projects($user_id, $con) {
         print("Ошибка MySQL: " . $error);
       }
     $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    return ($user_projects);
+    return $user_projects;
 }
 
 //получение списка из всех задач у текущего пользователя
@@ -67,7 +67,7 @@ function user_tasks($user_id, $project_id, $con) {
     else {
         $sql = "select * from task where user_id = ";
         $sql = $sql . $user_id;
-        $sql = $sql . " && project_id = " . $project_id;
+        $sql = $sql . " and project_id = " . $project_id;
     }
     $result = mysqli_query($con, $sql);
     if (!$result) {
@@ -75,8 +75,9 @@ function user_tasks($user_id, $project_id, $con) {
         print("Ошибка MySQL: " . $error);
     }
     $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    return ($user_projects);
+    return $user_projects;
 }
+
 
 
 
