@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
     $form_date = text_clean($_POST['date']);
 
     $form_date_str = strtotime($form_date);
+    $form_date = (date("Y-m-d H:i:s", $form_date_str));
     $cur_date = strtotime('now');
     if (($cur_date - $form_date_str) > 0) {
         $wrong_data['date'] = "Указанная дата меньше текущей";
@@ -60,14 +61,15 @@ if (isset($_POST['submit'])) {
     }
     if (empty($wrong_data)) {
         print("Можно отправлять");
-          $sql = "insert into task set user_id = 1, project_id = '$form_project', status = 0, name = '$form_name', date_must_done = '$form_date_str'";
-          mysqli_query($con, $sql);
-          print(mysqli_insert_id($con));
-//        $sql = "insert into task set user_id = 1, project_id = (?), status = 0, name = (?), date_must_done = (?)";
-//        db_insert_data($con, $sql, [$project_category['id'], $form_name, $form_date]);
-/*        $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, 'iss', $form_project, $form_name, $form_date);
-        mysqli_stmt_execute($stmt); */
+        $sql = "insert into task (user_id, project_id, status, name, date_must_done) VALUES (1, ?, 0, ?, ?)";
+//        db_insert_data($con, $sql, [$form_project, $form_name, $form_date_str]);
+        print($form_project);
+        print($form_name);
+        print($form_date);
+        $stmt = mysqli_prepare($con, $sql);
+        $res = mysqli_stmt_bind_param($stmt, 'isi', $form_project, $form_name, $form_date);
+        var_dump($stmt);
+        mysqli_stmt_execute($stmt);
     }
 }
 // конец обработки формы
