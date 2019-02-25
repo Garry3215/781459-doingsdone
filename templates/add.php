@@ -17,7 +17,7 @@
 
       <select class="form__input form__input--select" name="project" id="project">
         <?php foreach ($project_category as $key => $value): ?>
-            <option value=""><?=$value['name'];?></option>
+            <option value="<?=$value['id'];?>"><?=$value['name'];?></option>
         <?php endforeach; ?>
       </select>
     </div>

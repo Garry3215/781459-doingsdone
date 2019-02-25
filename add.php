@@ -1,5 +1,5 @@
 <?php
-require_once('functions.php');
+require_once 'functions.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -25,6 +25,7 @@ else {
 if (isset($_POST['submit'])) {
     $form_data['name'] = $_POST['name'];
     $form_data['date'] = $_POST['date'];
+    $form_data['project_id'] = $_POST['project'];
     $wrong_data = [];
     if (!empty($_POST['name'])) {
         $form_name = text_clean($_POST['name']);
@@ -32,12 +33,7 @@ if (isset($_POST['submit'])) {
     else {
         $wrong_data['name'] = "Введите название задачи";
     }
-    $form_project = mysqli_real_escape_string($con, $_POST['project']);
-    $sql = "SELECT id FROM project WHERE user_id = 1 AND name = (?)";
-    $stmt = mysqli_prepare($con, $sql);
-    mysqli_stmt_bind_param($stmt, 's', $form_project);
-    $res = mysqli_stmt_execute($stmt);
-    $form_project = (int)$res;
+    $form_project = text_clean($_POST['project']);
 
     $form_date = text_clean($_POST['date']);
 
@@ -67,8 +63,7 @@ if (isset($_POST['submit'])) {
         print($form_name);
         print($form_date);
         $stmt = mysqli_prepare($con, $sql);
-        $res = mysqli_stmt_bind_param($stmt, 'isi', $form_project, $form_name, $form_date);
-        var_dump($stmt);
+        mysqli_stmt_bind_param($stmt, 'isi', $form_project, $form_name, $form_date);
         mysqli_stmt_execute($stmt);
     }
 }
