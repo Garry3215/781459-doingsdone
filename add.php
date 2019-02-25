@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 require_once 'functions.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
@@ -22,11 +23,14 @@ else {
 
 // обработка формы
 
+$form_data = [];
+$wrong_data = [];
+
 if (isset($_POST['submit'])) {
     $form_data['name'] = $_POST['name'];
     $form_data['date'] = $_POST['date'];
     $form_data['project_id'] = $_POST['project'];
-    $wrong_data = [];
+
     if (!empty($_POST['name'])) {
         $form_name = text_clean($_POST['name']);
     }
@@ -56,15 +60,8 @@ if (isset($_POST['submit'])) {
         }
     }
     if (empty($wrong_data)) {
-        print("Можно отправлять");
         $sql = "insert into task (user_id, project_id, status, name, date_must_done) VALUES (1, ?, 0, ?, ?)";
-//        db_insert_data($con, $sql, [$form_project, $form_name, $form_date_str]);
-        print($form_project);
-        print($form_name);
-        print($form_date);
-        $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, 'isi', $form_project, $form_name, $form_date);
-        mysqli_stmt_execute($stmt);
+        $ins = db_insert_data($con, $sql, [$form_project, $form_name, $form_date]);
     }
 }
 // конец обработки формы
@@ -73,7 +70,6 @@ if (isset($_POST['submit'])) {
 $page_content = include_template('add.php', [
     'tasks' => $tasks,
     'actual_tasks' => $actual_tasks,
-    'show_complete_tasks' => $show_complete_tasks,
     'project_category' => $project_category,
     'wrong_data' => $wrong_data,
     'form_data' => $form_data

@@ -82,19 +82,14 @@ function user_tasks($user_id, $project_id, $con) {
 
 //получение списка задач по клику на название проекта
 function user_projects_cur($project_id, $con) {
-    $sql = "SELECT * FROM task WHERE user_id = 1";
+    $project_id = mysqli_real_escape_string($con, $project_id);
+    $sql = "SELECT * FROM task WHERE user_id = 1 AND project_id = " . $project_id;
     $result = mysqli_query($con, $sql);
-    $user_project_id = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    foreach ($user_project_id as $key => $value) {
-        if ($project_id == $value['project_id']) {
-            $actual_tasks = user_tasks(1, $project_id, $con);
-            break;
-        }
-        else {
-        http_response_code(404);
-        }
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (!empty($tasks)) {
+        return $tasks;
     }
-    return $actual_tasks;
+    return [];
 }
 
 //проверка текста и защита от инъекций
