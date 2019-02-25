@@ -23,5 +23,5 @@ CREATE table task (
     status tinyint(2) DEFAULT 0 not null,
     name text(1500) not null,
     file text(1500),
-    date_must_done timestamp
+    date_must_done timestamp(8)
 );

@@ -15,18 +15,18 @@ insert into project
     set user_id = 1, name = "Авто";
 
 
-    insert into task
-    	set user_id = 1, project_id = 3, status = 0, name = "Собеседование в IT компании", date_must_done = "2019-02-10 00:00:00";
-    insert into task
-        set user_id = 1, project_id = 3, status = 0, name = "Выполнить тестовое задание", date_must_done = "2019-12-25 00:00:00";
-    insert into task
-    	set user_id = 1, project_id = 2, status = 1, name = "Сделать задание первого раздела", date_must_done = "2019-12-21 00:00:00";
-    insert into task
-        set user_id = 1, project_id = 1, status = 0, name = "Встреча с другом", date_must_done = "2019-12-22 00:00:00";
-    insert into task
-        set user_id = 1, project_id = 4, status = 0, name = "Купить корм для кота";
-    insert into task
-        set user_id = 1, project_id = 4, status = 0, name = "Заказать пиццу";
+      insert into task
+      	set user_id = 1, project_id = 3, status = 0, name = "Собеседование в IT компании", date_must_done = "2019-02-10 00:00:00";
+      insert into task
+          set user_id = 1, project_id = 3, status = 0, name = "Выполнить тестовое задание", date_must_done = "2019-12-25 00:00:00";
+      insert into task
+      	set user_id = 1, project_id = 2, status = 1, name = "Сделать задание первого раздела", date_must_done = "2019-12-21 00:00:00";
+      insert into task
+          set user_id = 1, project_id = 1, status = 0, name = "Встреча с другом", date_must_done = "2019-12-22 00:00:00";
+      insert into task
+          set user_id = 1, project_id = 4, status = 0, name = "Купить корм для кота";
+      insert into task
+          set user_id = 1, project_id = 4, status = 0, name = "Заказать пиццу";
 
 //получить список из всех проектов для одного пользователя
 select name from project
