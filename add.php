@@ -15,8 +15,11 @@ $tasks = user_tasks(1, 0, $con);
 if (isset($_GET['project_id'])) {
     $project_id = (int) $_GET['project_id'];
     $actual_tasks = user_projects_cur($project_id, $con);
-}
-else {
+    if (empty($actual_tasks)) {
+        http_response_code(404);
+        die('404 Not Found');
+    }
+} else {
     $actual_tasks = user_tasks(1, 0, $con);
 }
 //конец обработки
@@ -57,11 +60,13 @@ if (isset($_POST['submit'])) {
             $file_path = __DIR__ . '/';
             $file_url = '/' . $file_name;
             move_uploaded_file($_FILES['preview']['tmp_name'], $file_path . $file_name);
+            $file_path = $file_path . $file_name;
         }
     }
     if (empty($wrong_data)) {
-        $sql = "insert into task (user_id, project_id, status, name, date_must_done) VALUES (1, ?, 0, ?, ?)";
-        $ins = db_insert_data($con, $sql, [$form_project, $form_name, $form_date]);
+        $sql = "insert into task (user_id, project_id, status, name, date_must_done, file) VALUES (1, ?, 0, ?, ?, ?)";
+        $ins = db_insert_data($con, $sql, [$form_project, $form_name, $form_date, $file_path]);
+        header("Location:/index.php");
     }
 }
 // конец обработки формы

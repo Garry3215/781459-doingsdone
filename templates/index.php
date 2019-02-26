@@ -22,20 +22,7 @@
 </div>
 
 <table class="tasks">
-    <tr class="tasks__item task">
-        <td class="task__select">
-            <label class="checkbox task__checkbox">
-                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                <span class="checkbox__text">Сделать главную страницу Дела в порядке</span>
-            </label>
-        </td>
-
-        <td class="task__file">
-            <a class="download-link" href="#">Home.psd</a>
-        </td>
-
-        <td class="task__date"></td>
-    </tr>
+    
     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
 
     <?php foreach ($actual_tasks as $key => $value): ?>
@@ -49,7 +36,13 @@
               <span class="checkbox__text"><?=$value['name']; ?></span>
             </label>
           </td>
-          <td class="task__date"><?=$value['date_must_done']; ?></td>
+          <td class="task__date"><?=Date_DB_to_Man($value['date_must_done']); ?></td>
+          <?php if (isset($value['file'])): ?>
+            <td class="task__file">
+                <a class="download-link" href="<?=$value['file']; ?>"><?=basename($value['file']); ?></a>
+            </td>
+          <?php endif ?>
+
           <td class="task__controls">
           </tr>
         <?php endif; ?>
