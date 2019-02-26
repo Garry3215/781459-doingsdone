@@ -65,11 +65,13 @@ function user_tasks($user_id, $project_id, $con) {
     if ($project_id === 0) {
         $sql = "select * from task where user_id = ";
         $sql = $sql . $user_id;
+        $sql = $sql . " ORDER BY date_add DESC";
     }
     else {
         $sql = "select * from task where user_id = ";
         $sql = $sql . $user_id;
         $sql = $sql . " and project_id = " . $project_id;
+        $sql = $sql . " ORDER BY date_add DESC";
     }
     $result = mysqli_query($con, $sql);
     if (!$result) {
@@ -84,6 +86,7 @@ function user_tasks($user_id, $project_id, $con) {
 function user_projects_cur($project_id, $con) {
     $project_id = mysqli_real_escape_string($con, $project_id);
     $sql = "SELECT * FROM task WHERE user_id = 1 AND project_id = " . $project_id;
+    $sql = $sql . " ORDER BY date_add DESC";
     $result = mysqli_query($con, $sql);
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     if (!empty($tasks)) {
@@ -161,6 +164,16 @@ function db_insert_data($link, $sql, $data = []) {
     $result = mysqli_stmt_execute($stmt);
     if ($result) {
         $result = mysqli_insert_id($link);
+    }
+    return $result;
+}
+
+function Date_DB_to_Man ($date) {
+    if ($date !== null) {
+        $result = strtotime($date);
+        $result = date ("d-m-Y", $result);
+    } else {
+        $result = null;
     }
     return $result;
 }

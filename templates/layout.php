@@ -22,7 +22,7 @@
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
-            <div class="main-header__side">
+<!--            <div class="main-header__side">
                 <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
@@ -36,6 +36,9 @@
                         <a href="#">Выйти</a>
                     </div>
                 </div>
+            </div> -->
+            <div class="main-header__side">
+              <a class="main-header__side-item button button--transparent" href="register.php">Войти</a>
             </div>
         </header>
 
