@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 
+<?php session_start(); ?>
 
 <html lang="ru">
 
@@ -21,28 +22,36 @@
             <a href="/index.php">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
+            <?php if (!isset($_SESSION['user_id'])): ?>
 
-<!--            <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
+              <div class="main-header__side">
+                <a class="main-header__side-item button button--transparent" href="register.php">Войти</a>
+              </div>
+            <?php else: ?>
+              
+                <div class="main-header__side">
+                    <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__image">
-                        <img src="img/user.png" width="40" height="40" alt="Пользователь">
-                    </div>
+                    <div class="main-header__side-item user-menu">
+                        <div class="user-menu__image">
+                            <img src="img/user.png" width="40" height="40" alt="Пользователь">
+                          </div>
 
-                    <div class="user-menu__data">
-                        <p>Константин</p>
+                        <div class="user-menu__data">
+                            <p>Константин</p>
 
-                        <a href="#">Выйти</a>
+                            <a href="logout.php">Выйти</a>
+                        </div>
                     </div>
                 </div>
-            </div> -->
-            <div class="main-header__side">
-              <a class="main-header__side-item button button--transparent" href="register.php">Войти</a>
-            </div>
+            <?php endif; ?>
+
         </header>
 
+
+
         <div class="content">
+            <?php if (isset($_SESSION['user_id'])): ?>
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
@@ -63,11 +72,12 @@
                 <a class="button button--transparent button--plus content__side-button"
                    href="pages/form-project.html" target="project_add">Добавить проект</a>
             </section>
-
+            <?php endif; ?>
             <main class="content__main">
                 <?= $content; ?>
             </main>
         </div>
+
     </div>
 </div>
 

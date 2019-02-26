@@ -7,20 +7,28 @@ if ($con == false) {
     echo 'Ошибка подключения: ' . mysqli_connect_error();
 }
 
-$project_category = user_projects(1, $con);
-$tasks = user_tasks(1, 0, $con);
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    $user_id = $_SESSION['user'];
+} else {
+    $user_id = 0;
+}
+
+$project_category = user_projects($user_id, $con);
+$tasks = user_tasks($user_id, 0, $con);
 $actual_tasks = [];
 
 //обработка кликов по названиям проектов
 if (isset($_GET['project_id'])) {
     $project_id = (int) $_GET['project_id'];
-    $actual_tasks = user_projects_cur($project_id, $con);
+    $actual_tasks = user_projects_cur($user_id, $project_id, $con);
     if (empty($actual_tasks)) {
         http_response_code(404);
         die('404 Not Found');
     }
 } else {
-    $actual_tasks = user_tasks(1, 0, $con);
+    $actual_tasks = user_tasks($user_id, 0, $con);
 }
 //конец обработки
 
@@ -34,7 +42,6 @@ $layout_content = include_template('layout.php', [
     'project_category' => $project_category,
     'tasks' => $tasks,
     'content' => $page_content,
-    'user_name' => 'Константин',
     'title' => 'Главная страница'
 ]);
 

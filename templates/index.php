@@ -1,3 +1,6 @@
+<?php session_start(); ?>
+
+<?php if (isset($_SESSION['user_id'])): ?>
 <h2 class="content__main-heading">Список задач</h2>
 
 <form class="search-form" action="index.php" method="post">
@@ -22,7 +25,7 @@
 </div>
 
 <table class="tasks">
-    
+
     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
 
     <?php foreach ($actual_tasks as $key => $value): ?>
@@ -48,3 +51,20 @@
         <?php endif; ?>
     <?php endforeach; ?>
 </table>
+
+<?php else: ?>
+  <div class="content">
+    <section class="welcome">
+      <h2 class="welcome__heading">«Дела в порядке»</h2>
+
+      <div class="welcome__text">
+        <p>«Дела в порядке» — это веб приложение для удобного ведения списка дел. Сервис помогает пользователям не забывать о предстоящих важных событиях и задачах.</p>
+
+        <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
+      </div>
+
+      <a class="welcome__button button" href="register.php">Зарегистрироваться</a>
+    </section>
+  </div>
+
+<?php endif; ?>
