@@ -32,12 +32,17 @@
       <?php if ($show_complete_tasks === 1 && $value['done']): ?>
 
       <?php else: ?>
-        <tr class="tasks__item task <?php if ($value['done']): ?>task--completed<?php endif ?><?php if (date_check($value['date'])): ?>task--important<?php endif ?>">
+
+        <tr class="tasks__item tasks <?php if ($value['done']): ?>task--completed<?php endif ?><?php if (date_check($value['date_must_done'])): ?>task--important<?php endif ?>">
           <td class="task__select">
-            <label class="checkbox task__checkbox">
-              <input class="checkbox__input visually-hidden" type="checkbox" <?php if ($value['done']): ?>checked<?php endif ?>>
-              <span class="checkbox__text"><?=$value['name']; ?></span>
-            </label>
+            <form class="" id="<?=$value['id']; ?>" action="index.php" method="post" name="<?=$value['id']; ?>">
+              <label class="checkbox task__checkbox">
+                <input class="checkbox__input visually-hidden" name="<?=$value['id']; ?>" type="checkbox" <?php if ($value['status'] == 1): ?>checked<?php endif ?> onchange="this.form.submit()">
+                <span class="checkbox__text"><?=$value['name']; ?></span>
+              </label>
+              <input class="visually-hidden" type="text" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
+              <input class="visually-hidden" type="submit" id="<?=$value['id']; ?>" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
+            </form>
           </td>
           <td class="task__date"><?=Date_DB_to_Man($value['date_must_done']); ?></td>
           <?php if (isset($value['file'])): ?>

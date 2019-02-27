@@ -34,6 +34,7 @@ function date_check($project_date) {
     $pr_date = strtotime($project_date);
     $diff = $pr_date - $cur_date;
     $diff = $diff / 86400;
+
     if ($diff > 1) {
         $diff = false;
     }
@@ -70,9 +71,8 @@ function user_tasks($user_id, $project_id, $con) {
         $user_projects = [];
     } else {
       if ($project_id === 0) {
-          $sql = "select * from task where user_id = ";
-          $sql = $sql . $user_id;
-          $sql = $sql . " ORDER BY date_add DESC";
+          $sql = "select * from task where user_id = '$user_id' ORDER BY date_add DESC";
+
       }
       else {
           $sql = "select * from task where user_id = ";
@@ -86,6 +86,7 @@ function user_tasks($user_id, $project_id, $con) {
           print("Ошибка MySQL: " . $error);
       }
       $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
     }
 
     return $user_projects;
@@ -186,5 +187,8 @@ function Date_DB_to_Man ($date) {
     }
     return $result;
 }
+
+
+// 
 
 ?>

@@ -9,37 +9,39 @@ if ($con == false) {
 
 session_start();
 
+
+
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
     $user_id = 0;
 }
 
+$wrong_data = [];
+
+if (isset($_POST['submit'])) {
+    if (empty($_POST['name'])) {
+        $wrong_data['name'] = "Введите название проекта";
+    } else {
+
+        foreach ($project_category as $key => $value) {
+            if ($_POST['name'] == $value['name']) {
+                $wrong_data['name'] = "Проект с таким именем уже существует";
+            }
+        }
+    }
+    if (empty($wrong_data)) {
+        $safe_name = mysqli_real_escape_string($con, $_POST['name']);
+        $sql = "INSERT into project (user_id, name) VALUES (?, ?)";
+
+        $ins = db_insert_data($con, $sql, [$user_id, $safe_name]);
+        header("Location:/index.php");
+    }
+}
+
 $project_category = user_projects($user_id, $con);
 $tasks = user_tasks($user_id, 0, $con);
 $actual_tasks = [];
-
-// обработка ЧекБокса "выполненная задача"
-
-
-
-/*if (isset($_POST)) {
-    $task_id = array_keys($_POST);
-    $task_id = $task_id[0];
-    $sql = "SELECT status FROM task WHERE id = '$task_id'";
-    $res = mysqli_query($con, $sql);
-    $task_status = mysqli_fetch_assoc($res);
-    if ($task_status['status'] == 0) {
-        $sql = "UPDATE task SET status = 1 WHERE id = '$task_id'";
-    } else {
-        $sql = "UPDATE task SET status = 0 WHERE id = '$task_id'";
-    }
-    $res = mysqli_query($con, $sql);
-}*/
-
-var_dump($_GET);
-
-// конец обработки ЧекБокса "выполненная задача"
 
 //обработка кликов по названиям проектов
 if (isset($_GET['project_id'])) {
@@ -57,11 +59,13 @@ if (isset($_GET['project_id'])) {
 
 
 
-$page_content = include_template('index.php', [
+
+
+$page_content = include_template('add_project.php', [
     'tasks' => $tasks,
     'actual_tasks' => $actual_tasks,
-    'project_category' => $project_category,
-    'show_complete_tasks' => $show_complete_tasks
+    'show_complete_tasks' => $show_complete_tasks,
+    'wrong_data' => $wrong_data
 ]);
 
 $layout_content = include_template('layout.php', [
