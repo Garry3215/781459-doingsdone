@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<?php session_start(); ?>
+
 
 <html lang="ru">
 
@@ -28,7 +28,7 @@
                 <a class="main-header__side-item button button--transparent" href="register.php">Войти</a>
               </div>
             <?php else: ?>
-              
+
                 <div class="main-header__side">
                     <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
@@ -57,7 +57,7 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-
+                        
                         <?php foreach ($project_category as $key => $value): ?>
                           <li class="main-navigation__list-item">
                               <a class="main-navigation__list-item-link" href="/index.php?project_id=<?=$value['id']?>"><?=$value['name'];?></a>
@@ -70,7 +70,7 @@
                 </nav>
 
                 <a class="button button--transparent button--plus content__side-button"
-                   href="pages/form-project.html" target="project_add">Добавить проект</a>
+                   href="add_project.php">Добавить проект</a>
             </section>
             <?php endif; ?>
             <main class="content__main">
