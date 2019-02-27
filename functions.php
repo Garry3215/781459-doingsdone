@@ -49,43 +49,52 @@ function date_check($project_date) {
 
 //получение списка проектов у текущего пользователя
 function user_projects($user_id, $con) {
-    $sql = "select * from project where user_id = ";
-    $sql = $sql . $user_id;
-    $result = mysqli_query($con, $sql);
-    if (!$result) {
-        $error = mysqli_error($con);
-        print("Ошибка MySQL: " . $error);
-      }
-    $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if ($user_id == 0) {
+        $user_projects = [];
+    } else {
+        $sql = "select * from project where user_id = ";
+        $sql = $sql . $user_id;
+        $result = mysqli_query($con, $sql);
+            if (!$result) {
+                $error = mysqli_error($con);
+                print("Ошибка MySQL: " . $error);
+            }
+            $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
     return $user_projects;
 }
 
 //получение списка из всех задач у текущего пользователя
 function user_tasks($user_id, $project_id, $con) {
-    if ($project_id === 0) {
-        $sql = "select * from task where user_id = ";
-        $sql = $sql . $user_id;
-        $sql = $sql . " ORDER BY date_add DESC";
+    if ($user_id == 0) {
+        $user_projects = [];
+    } else {
+      if ($project_id === 0) {
+          $sql = "select * from task where user_id = ";
+          $sql = $sql . $user_id;
+          $sql = $sql . " ORDER BY date_add DESC";
+      }
+      else {
+          $sql = "select * from task where user_id = ";
+          $sql = $sql . $user_id;
+          $sql = $sql . " and project_id = " . $project_id;
+          $sql = $sql . " ORDER BY date_add DESC";
+      }
+      $result = mysqli_query($con, $sql);
+      if (!$result) {
+          $error = mysqli_error($con);
+          print("Ошибка MySQL: " . $error);
+      }
+      $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-    else {
-        $sql = "select * from task where user_id = ";
-        $sql = $sql . $user_id;
-        $sql = $sql . " and project_id = " . $project_id;
-        $sql = $sql . " ORDER BY date_add DESC";
-    }
-    $result = mysqli_query($con, $sql);
-    if (!$result) {
-        $error = mysqli_error($con);
-        print("Ошибка MySQL: " . $error);
-    }
-    $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
     return $user_projects;
 }
 
 //получение списка задач по клику на название проекта
-function user_projects_cur($project_id, $con) {
+function user_projects_cur($user_id, $project_id, $con) {
     $project_id = mysqli_real_escape_string($con, $project_id);
-    $sql = "SELECT * FROM task WHERE user_id = 1 AND project_id = " . $project_id;
+    $sql = "SELECT * FROM task WHERE user_id = '$user_id' AND project_id = '$project_id'";
     $sql = $sql . " ORDER BY date_add DESC";
     $result = mysqli_query($con, $sql);
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
