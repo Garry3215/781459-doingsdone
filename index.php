@@ -9,6 +9,7 @@ if ($con == false) {
 
 session_start();
 
+
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
@@ -18,12 +19,23 @@ if (isset($_SESSION['user_id'])) {
 $project_category = user_projects($user_id, $con);
 $tasks = user_tasks($user_id, 0, $con);
 $actual_tasks = [];
+$bad_search = false;
+
+// Обратотка формы поиска
+if (isset($_GET) && $_GET['search']) {
+    $search = text_clean($_GET['search']);
+    $sql = "SELECT * FROM task WHERE MATCH(name) AGAINST ('$search')";
+    $res = mysqli_query($con, $sql);
+    $actual_tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    if (empty($actual_tasks)) {
+        $bad_search = true;
+    }
+
+}
+// Конец обратоткт формы поиска
 
 // обработка ЧекБокса "выполненная задача"
-
-
-
-/*if (isset($_POST)) {
+if (isset($_POST)) {
     $task_id = array_keys($_POST);
     $task_id = $task_id[0];
     $sql = "SELECT status FROM task WHERE id = '$task_id'";
@@ -35,10 +47,7 @@ $actual_tasks = [];
         $sql = "UPDATE task SET status = 0 WHERE id = '$task_id'";
     }
     $res = mysqli_query($con, $sql);
-}*/
-
-var_dump($_GET);
-
+}
 // конец обработки ЧекБокса "выполненная задача"
 
 //обработка кликов по названиям проектов
@@ -49,7 +58,7 @@ if (isset($_GET['project_id'])) {
         http_response_code(404);
         die('404 Not Found');
     }
-} else {
+} elseif (empty($actual_tasks)) {
     $actual_tasks = user_tasks($user_id, 0, $con);
 }
 //конец обработки
@@ -61,7 +70,8 @@ $page_content = include_template('index.php', [
     'tasks' => $tasks,
     'actual_tasks' => $actual_tasks,
     'project_category' => $project_category,
-    'show_complete_tasks' => $show_complete_tasks
+    'show_complete_tasks' => $show_complete_tasks,
+    'bad_search' => $bad_search
 ]);
 
 $layout_content = include_template('layout.php', [

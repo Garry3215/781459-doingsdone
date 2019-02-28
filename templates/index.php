@@ -3,23 +3,29 @@
 <?php if (isset($_SESSION['user_id'])): ?>
 <h2 class="content__main-heading">Список задач</h2>
 
-<form class="search-form" action="index.php" method="post">
-    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+<form class="search-form" action="index.php" method="get">
+    <input class="search-form__input" type="text" name="search" value="" placeholder="Поиск по задачам">
 
     <input class="search-form__submit" type="submit" name="" value="Искать">
 </form>
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/" class="tasks-switch__item">Повестка дня</a>
-        <a href="/" class="tasks-switch__item">Завтра</a>
-        <a href="/" class="tasks-switch__item">Просроченные</a>
+
+        <a href="/<?= $_GET ? '' : '' ?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+        <a href="/<?= $_GET ? '' : '' ?>?tasks-switch=today" class="tasks-switch__item">Повестка дня</a>
+        <a href="/<?=$_GET['show_completed'] ? $_GET['show_completed'] = 1 : $_GET['show_completed'] = 0; ?>&tasks-switch=tomorrow" class="tasks-switch__item">Завтра</a>
+        <a href="/<?=$_GET; ?>?tasks-switch=lost" class="tasks-switch__item">Просроченные</a>
     </nav>
 
     <label class="checkbox">
         <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?php if ($show_complete_tasks === 1): ?>checked<?php endif; ?> >
+        <input class="checkbox__input visually-hidden show_completed" type="checkbox"
+            <?php if ($_GET['show_completed'] == 1): ?>
+                checked
+            <?php else: ?>
+
+            <?php endif; ?> >
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
@@ -27,9 +33,11 @@
 <table class="tasks">
 
     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-
+  <?php if ($bad_search): ?>
+  <p>Ничего не найдено по вашему запросу</p>
+  <?php else: ?>
     <?php foreach ($actual_tasks as $key => $value): ?>
-      <?php if ($show_complete_tasks === 1 && $value['done']): ?>
+      <?php if (isset($_GET) && $_GET['show_completed'] == 0 && $value['status'] == 1): ?>
 
       <?php else: ?>
 
@@ -49,12 +57,13 @@
             <td class="task__file">
                 <a class="download-link" href="<?=$value['file']; ?>"><?=basename($value['file']); ?></a>
             </td>
-          <?php endif ?>
+          <?php endif; ?>
 
           <td class="task__controls">
           </tr>
         <?php endif; ?>
     <?php endforeach; ?>
+  <?php endif; ?>
 </table>
 
 <?php else: ?>
