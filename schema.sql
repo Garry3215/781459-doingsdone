@@ -25,3 +25,7 @@ CREATE table task (
     file text(1500),
     date_must_done timestamp(8)
 );
+
+
+CREATE FULLTEXT INDEX task_search
+ON task(name)
