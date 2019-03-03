@@ -190,9 +190,8 @@ function Date_DB_to_Man ($date) {
     return $result;
 }
 
-function getQueryWithParameters($tasks_switch) {
+function getQueryWithParameters($params = []) {
     $query = $_GET;
-    $params['tasks-switch'] = $tasks_switch;
     $query = array_merge($query, $params);
     return http_build_query($query);
 }

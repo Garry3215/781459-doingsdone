@@ -12,10 +12,10 @@
 <div class="tasks-controls">
     <nav class="tasks-switch">
 
-        <a href="/index.php?<?=getQueryWithParameters("all");?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/index.php?<?=getQueryWithParameters("today");?>" class="tasks-switch__item">Повестка дня</a>
-        <a href="/index.php?<?=getQueryWithParameters("tomorrow");?>" class="tasks-switch__item">Завтра</a>
-        <a href="/index.php?<?=getQueryWithParameters("lost");?>" class="tasks-switch__item">Просроченные</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "all"]);?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "today"]);?>" class="tasks-switch__item">Повестка дня</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "tomorrow"]);?>" class="tasks-switch__item">Завтра</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "lost"]);?>" class="tasks-switch__item">Просроченные</a>
     </nav>
 
     <label class="checkbox">

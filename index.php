@@ -63,11 +63,11 @@ if (isset($_GET['project_id'])) {
 }
 
 
-if (isset($_GET['tasks-switch'])) {
-    if (($_GET['tasks-switch']) === "all") {
+if (isset($_GET['tasks_switch'])) {
+    if (($_GET['tasks_switch']) === "all") {
 
     }
-    if (($_GET['tasks-switch']) === "today") {
+    if (($_GET['tasks_switch']) === "today") {
       $cur_date = strtotime('today');
       foreach ($actual_tasks as $key => $value) {
           $value_date = strtotime($value['date_must_done']);
@@ -77,7 +77,7 @@ if (isset($_GET['tasks-switch'])) {
       }
       $actual_tasks = $actual_tasks_cur;
     }
-    if (($_GET['tasks-switch']) === "tomorrow") {
+    if (($_GET['tasks_switch']) === "tomorrow") {
       $cur_date = strtotime('today + 1 day');
       foreach ($actual_tasks as $key => $value) {
           $value_date = strtotime($value['date_must_done']);
@@ -87,7 +87,7 @@ if (isset($_GET['tasks-switch'])) {
       }
       $actual_tasks = $actual_tasks_cur;
     }
-    if (($_GET['tasks-switch']) === "lost") {
+    if (($_GET['tasks_switch']) === "lost") {
       $cur_date = strtotime('today');
       foreach ($actual_tasks as $key => $value) {
           $value_date = strtotime($value['date_must_done']);
