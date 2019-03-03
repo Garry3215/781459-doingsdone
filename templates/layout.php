@@ -25,7 +25,7 @@
             <?php if (!isset($_SESSION['user_id'])): ?>
 
               <div class="main-header__side">
-                <a class="main-header__side-item button button--transparent" href="register.php">Войти</a>
+                <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
               </div>
             <?php else: ?>
 
@@ -38,8 +38,7 @@
                           </div>
 
                         <div class="user-menu__data">
-                            <p>Константин</p>
-
+                            <p><?=$user_data['user_name']?></p>
                             <a href="logout.php">Выйти</a>
                         </div>
                     </div>
@@ -57,7 +56,7 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        
+
                         <?php foreach ($project_category as $key => $value): ?>
                           <li class="main-navigation__list-item">
                               <a class="main-navigation__list-item-link" href="/index.php?project_id=<?=$value['id']?>"><?=$value['name'];?></a>
@@ -88,9 +87,9 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
+        <?php if (isset($_SESSION['user_id'])): ?>
         <a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>
-
+        <?php endif; ?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">

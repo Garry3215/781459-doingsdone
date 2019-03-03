@@ -18,6 +18,8 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $wrong_data = [];
+$project_category = user_projects($user_id, $con);
+
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
@@ -39,7 +41,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-$project_category = user_projects($user_id, $con);
+
 $tasks = user_tasks($user_id, 0, $con);
 $actual_tasks = [];
 

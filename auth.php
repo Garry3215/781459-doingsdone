@@ -56,11 +56,12 @@ if (isset($_POST['submit'])) {
 
             if (password_verify($form_data['password'], $user_data['password'])) {
                 $_SESSION['user_id'] = $user_data['id'];
+                $_SESSION['user_name'] = $user_data['name'];
                 header("Location:/index.php");
             } else {
                 $_SESSION = [];
                 $wrong_data['auth'] = "Логин и/или пароль указаны не верно";
-                
+
             }
         }
 

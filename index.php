@@ -65,7 +65,7 @@ if (isset($_GET['project_id'])) {
 
 if (isset($_GET['tasks-switch'])) {
     if (($_GET['tasks-switch']) === "all") {
-        
+
     }
     if (($_GET['tasks-switch']) === "today") {
       $cur_date = strtotime('today');
@@ -119,6 +119,7 @@ $layout_content = include_template('layout.php', [
     'project_category' => $project_category,
     'tasks' => $tasks,
     'content' => $page_content,
+    'user_data' => $_SESSION,
     'title' => 'Главная страница'
 ]);
 
