@@ -12,10 +12,10 @@
 <div class="tasks-controls">
     <nav class="tasks-switch">
 
-        <a href="/<?= $_GET ? '' : '' ?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/<?= $_GET ? '' : '' ?>?tasks-switch=today" class="tasks-switch__item">Повестка дня</a>
-        <a href="/<?=$_GET['show_completed'] ? $_GET['show_completed'] = 1 : $_GET['show_completed'] = 0; ?>&tasks-switch=tomorrow" class="tasks-switch__item">Завтра</a>
-        <a href="/<?=$_GET; ?>?tasks-switch=lost" class="tasks-switch__item">Просроченные</a>
+        <a href="/index.php<?php if ($_GET['project_id']): ?>?project_id=<?php echo $_GET['project_id'] ?>&tasks-switch=all<?php endif; ?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+        <a href="/index.php<?php if ($_GET['project_id']): ?>?project_id=<?php echo $_GET['project_id'] ?>&tasks-switch=today<?php else: ?>?tasks-switch=today<?php endif; ?>" class="tasks-switch__item">Повестка дня</a>
+        <a href="/index.php<?php if ($_GET['project_id']): ?>?project_id=<?php echo $_GET['project_id'] ?>&tasks-switch=tomorrow<?php else: ?>?tasks-switch=tomorrow<?php endif; ?>" class="tasks-switch__item">Завтра</a>
+        <a href="/index.php<?php if ($_GET['project_id']): ?>?project_id=<?php echo $_GET['project_id'] ?>&tasks-switch=lost<?php else: ?>?tasks-switch=lost<?php endif; ?>" class="tasks-switch__item">Просроченные</a>
     </nav>
 
     <label class="checkbox">

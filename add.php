@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 
     $form_date_str = strtotime($form_date);
     $form_date = (date("Y-m-d H:i:s", $form_date_str));
-    $cur_date = strtotime('now');
+    $cur_date = strtotime('today');
     if (($cur_date - $form_date_str) > 0) {
         $wrong_data['date'] = "Указанная дата меньше текущей";
     }
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
           $sql = "insert into task (user_id, project_id, status, name, date_must_done, file) VALUES (?, ?, 0, ?, ?, ?)";
           $ins = db_insert_data($con, $sql, [$user_id, $form_project, $form_name, $form_date, $file_path]);
         }
-        
+
         header("Location:/index.php");
     }
 }
