@@ -1,6 +1,6 @@
 <?php
-require_once('functions.php');
-require_once('vendor/autoload.php');
+require_once 'functions.php';
+require_once 'vendor/autoload.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -31,7 +31,6 @@ if (isset($_GET) && $_GET['search']) {
     if (empty($actual_tasks)) {
         $bad_search = true;
     }
-
 }
 // Конец обратоткт формы поиска
 
@@ -66,37 +65,36 @@ if (isset($_GET['project_id'])) {
 
 if (isset($_GET['tasks_switch'])) {
     if (($_GET['tasks_switch']) === "all") {
-
     }
     if (($_GET['tasks_switch']) === "today") {
-      $cur_date = strtotime('today');
-      foreach ($actual_tasks as $key => $value) {
-          $value_date = strtotime($value['date_must_done']);
-          if ($value_date === $cur_date) {
+        $cur_date = strtotime('today');
+        foreach ($actual_tasks as $key => $value) {
+            $value_date = strtotime($value['date_must_done']);
+            if ($value_date === $cur_date) {
                 $actual_tasks_cur[$key] = $value;
-          }
-      }
-      $actual_tasks = $actual_tasks_cur;
+            }
+        }
+        $actual_tasks = $actual_tasks_cur;
     }
     if (($_GET['tasks_switch']) === "tomorrow") {
-      $cur_date = strtotime('today + 1 day');
-      foreach ($actual_tasks as $key => $value) {
-          $value_date = strtotime($value['date_must_done']);
-          if ($value_date === $cur_date) {
+        $cur_date = strtotime('today + 1 day');
+        foreach ($actual_tasks as $key => $value) {
+            $value_date = strtotime($value['date_must_done']);
+            if ($value_date === $cur_date) {
                 $actual_tasks_cur[$key] = $value;
-          }
-      }
-      $actual_tasks = $actual_tasks_cur;
+            }
+        }
+        $actual_tasks = $actual_tasks_cur;
     }
     if (($_GET['tasks_switch']) === "lost") {
-      $cur_date = strtotime('today');
-      foreach ($actual_tasks as $key => $value) {
-          $value_date = strtotime($value['date_must_done']);
-          if ($value_date < $cur_date) {
+        $cur_date = strtotime('today');
+        foreach ($actual_tasks as $key => $value) {
+            $value_date = strtotime($value['date_must_done']);
+            if ($value_date < $cur_date) {
                 $actual_tasks_cur[$key] = $value;
-          }
-      }
-      $actual_tasks = $actual_tasks_cur;
+            }
+        }
+        $actual_tasks = $actual_tasks_cur;
     }
 }
 

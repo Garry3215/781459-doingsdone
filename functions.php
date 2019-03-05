@@ -1,5 +1,6 @@
 <?php
-function include_template($name, $data) {
+function include_template($name, $data)
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -16,20 +17,34 @@ function include_template($name, $data) {
     return $result;
 }
 
-//считает количество задач у каждого проекта в левой части страницы
-function count_tasks($project_name, $tasks) {
-
-  $num = 0;
-  foreach ($tasks as $key => $value) {
-    if ($value['project_id'] === $project_name) {
-      $num = $num + 1;
+/**
+* считает количество задач у каждого проекта в левой части страницы
+*
+* @param string $project_name Название проекта
+* @param array $tasks все задачи данного пользователя
+*
+* @return integer Количество задач в данном проекте
+*/
+function count_tasks($project_name, $tasks)
+{
+    $num = 0;
+    foreach ($tasks as $key => $value) {
+        if ($value['project_id'] === $project_name) {
+            $num = $num + 1;
+        }
     }
-  }
-  return $num;
+    return $num;
 }
 
-//проверка даты задачи для пометки горящих
-function date_check($project_date) {
+/**
+* проверяет дату задачи для пометки тегом ""горящих" задач в разметке
+* -17 с лишним тысяч - временная метка для текста
+* @param timestamp дата текущей задачи
+*
+* @return boolean true, если срок задачи истекает сегодня или завтра
+*/
+function date_check($project_date)
+{
     $cur_date = strtotime("now");
     $pr_date = strtotime($project_date);
     $diff = $pr_date - $cur_date;
@@ -37,63 +52,82 @@ function date_check($project_date) {
 
     if ($diff > 1) {
         $diff = false;
-    }
-    elseif ($diff < -17000) {
+    } elseif ($diff < -17000) {
         $diff = false;
-    }
-    else {
+    } else {
         $diff = true;
     }
     return $diff;
-    //-17 с лишним тысяч - временная метка для текста
 }
 
-//получение списка проектов у текущего пользователя
-function user_projects($user_id, $con) {
+/**
+* получение списка проектов у текущего пользователя
+* @param integer ID текушего пользователя
+* @param misqli ресурс соединения
+*
+* @return array Список проектов текущего пользователя
+*/
+function user_projects($user_id, $con)
+{
     if ($user_id == 0) {
         $user_projects = [];
     } else {
         $sql = "select * from project where user_id = ";
         $sql = $sql . $user_id;
         $result = mysqli_query($con, $sql);
-            if (!$result) {
-                $error = mysqli_error($con);
-                print("Ошибка MySQL: " . $error);
-            }
-            $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if (!$result) {
+            $error = mysqli_error($con);
+            print("Ошибка MySQL: " . $error);
         }
+        $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
     return $user_projects;
 }
 
-//получение списка из всех задач у текущего пользователя
-function user_tasks($user_id, $project_id, $con) {
+/**
+* получение списка из всех задач у текущего пользователя
+*
+* @param integer ID текущего пользователя
+* @param integer ID текушего проекта
+* @param misqli ресурс соединения
+*
+* @return array проекты текущего пользователя
+*/
+function user_tasks($user_id, $project_id, $con)
+{
     if ($user_id == 0) {
         $user_projects = [];
     } else {
-      if ($project_id === 0) {
-          $sql = "select * from task where user_id = '$user_id' ORDER BY date_add DESC";
-
-      }
-      else {
-          $sql = "select * from task where user_id = ";
-          $sql = $sql . $user_id;
-          $sql = $sql . " and project_id = " . $project_id;
-          $sql = $sql . " ORDER BY date_add DESC";
-      }
-      $result = mysqli_query($con, $sql);
-      if (!$result) {
-          $error = mysqli_error($con);
-          print("Ошибка MySQL: " . $error);
-      }
-      $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+        if ($project_id === 0) {
+            $sql = "select * from task where user_id = '$user_id' ORDER BY date_add DESC";
+        } else {
+            $sql = "select * from task where user_id = ";
+            $sql = $sql . $user_id;
+            $sql = $sql . " and project_id = " . $project_id;
+            $sql = $sql . " ORDER BY date_add DESC";
+        }
+        $result = mysqli_query($con, $sql);
+        if (!$result) {
+            $error = mysqli_error($con);
+            print("Ошибка MySQL: " . $error);
+        }
+        $user_projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     return $user_projects;
 }
 
-//получение списка задач по клику на название проекта
-function user_projects_cur($user_id, $project_id, $con) {
+/**
+* получение списка задач по клику на название проекта
+*
+* @param integer ID текущего пользователя
+* @param integer ID текушего проекта
+* @param misqli ресурс соединения
+*
+* @return array проекты текущего пользователя, выбранные по клику на ссылку проекта
+*/
+function user_projects_cur($user_id, $project_id, $con)
+{
     $project_id = mysqli_real_escape_string($con, $project_id);
     $sql = "SELECT * FROM task WHERE user_id = '$user_id' AND project_id = '$project_id'";
     $sql = $sql . " ORDER BY date_add DESC";
@@ -106,7 +140,8 @@ function user_projects_cur($user_id, $project_id, $con) {
 }
 
 //проверка текста и защита от инъекций
-function text_clean($text) {
+function text_clean($text)
+{
     $text = trim($text);
     $text = strip_tags($text);
     $text = htmlspecialchars($text);
@@ -123,7 +158,8 @@ function text_clean($text) {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
+function db_get_prepare_stmt($link, $sql, $data = [])
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($data) {
@@ -135,11 +171,9 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
             if (is_int($value)) {
                 $type = 'i';
-            }
-            else if (is_string($value)) {
+            } elseif (is_string($value)) {
                 $type = 's';
-            }
-            else if (is_double($value)) {
+            } elseif (is_double($value)) {
                 $type = 'd';
             }
 
@@ -158,7 +192,17 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
-function db_fetch_data($link, $sql, $data = []) {
+/**
+* Получает данные из БД
+*
+* @param misqli ресурс соединения
+* @param string SQL запрос
+* @param array данные для подготовленного выражения
+*
+* @return array данные полученного запроса
+*/
+function db_fetch_data($link, $sql, $data = [])
+{
     $result = [];
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
@@ -169,7 +213,17 @@ function db_fetch_data($link, $sql, $data = []) {
     return $result;
 }
 
-function db_insert_data($link, $sql, $data = []) {
+/**
+* Записывает данные в БД
+*
+* @param misqli ресурс соединения
+* @param string SQL запрос
+* @param array данные для подготовленного выражения
+*
+* @return array ID последней записи
+*/
+function db_insert_data($link, $sql, $data = [])
+{
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     $result = mysqli_stmt_execute($stmt);
     if ($result) {
@@ -178,24 +232,34 @@ function db_insert_data($link, $sql, $data = []) {
     return $result;
 }
 
-
-// Возвращает дату из БД в человекопонятном формате
-function Date_DB_to_Man ($date) {
+/**
+* Возвращает дату из БД в человекопонятном формате
+*
+* @param timestamp дата задачи из БД
+*
+* @return date Дата в формате "ДД-ММ-ГГГГ"
+*/
+function Date_DB_to_Man($date)
+{
     if ($date !== null) {
         $result = strtotime($date);
-        $result = date ("d-m-Y", $result);
+        $result = date("d-m-Y", $result);
     } else {
         $result = null;
     }
     return $result;
 }
 
-function getQueryWithParameters($params = []) {
+/**
+* Формирует URL из $_GET и переданные параметров запроса
+*
+* @param array Данные для параметра запроса
+*
+* @return string URL для подстановки
+*/
+function getQueryWithParameters($params = [])
+{
     $query = $_GET;
     $query = array_merge($query, $params);
     return http_build_query($query);
 }
-
-//
-
-?>

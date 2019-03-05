@@ -1,5 +1,5 @@
 <?php
-require_once('functions.php');
+require_once 'functions.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -25,7 +25,6 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         $wrong_data['name'] = "Введите название проекта";
     } else {
-
         foreach ($project_category as $key => $value) {
             if ($_POST['name'] == $value['name']) {
                 $wrong_data['name'] = "Проект с таким именем уже существует";

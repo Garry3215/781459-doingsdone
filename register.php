@@ -5,10 +5,10 @@ require_once 'functions.php';
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
 if ($con == false) {
-print("Ошибка подключения: " . mysqli_connect_error());
+    print("Ошибка подключения: " . mysqli_connect_error());
 }
 
-$project_category = user_projects (1, $con);
+$project_category = user_projects(1, $con);
 $tasks = user_tasks(1, 0, $con);
 $actual_tasks = [];
 
@@ -54,9 +54,9 @@ if (isset($_POST['submit'])) {
         $form_data['name'] = mysqli_real_escape_string($con, $_POST['name']);
     }
     if (empty($wrong_data)) {
-      $sql = "insert into users (email, password, name) VALUES (?, ?, ?)";
-      $ins = db_insert_data($con, $sql, [$form_data['email'], $form_data['password'], $form_data['name']]);
-      header("Location:/index.php");
+        $sql = "insert into users (email, password, name) VALUES (?, ?, ?)";
+        $ins = db_insert_data($con, $sql, [$form_data['email'], $form_data['password'], $form_data['name']]);
+        header("Location:/index.php");
     }
 }
 
@@ -78,6 +78,3 @@ $layout_content = include_template('layout.php', [
   ]);
 
 print($layout_content);
-
-
-?>

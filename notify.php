@@ -1,6 +1,6 @@
 <?php
-require_once('functions.php');
-require_once('vendor/autoload.php');
+require_once 'functions.php';
+require_once 'vendor/autoload.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -37,8 +37,6 @@ if ($number > 0) {
         } else {
             $today_task_date = $today_task_date . ", " . Date_DB_to_Man($value['date_must_done']);
         }
-
-
     }
 }
 $transport = new Swift_SmtpTransport('phpdemo.ru', 25);
@@ -52,11 +50,3 @@ $message->setFrom("keks@phpdemo.ru", "htmlacademy");
 
 $mailer = new Swift_Mailer($transport);
 $mailer->send($message);
-
-
-
-
-
-
-
-?>

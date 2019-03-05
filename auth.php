@@ -1,5 +1,5 @@
 <?php
-require_once('functions.php');
+require_once 'functions.php';
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -62,10 +62,8 @@ if (isset($_POST['submit'])) {
             } else {
                 $_SESSION = [];
                 $wrong_data['auth'] = "Логин и/или пароль указаны не верно";
-
             }
         }
-
     }
 }
 
