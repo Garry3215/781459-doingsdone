@@ -1,5 +1,6 @@
 <?php
 require_once('functions.php');
+require_once('vendor/autoload.php');
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
@@ -24,7 +25,7 @@ $bad_search = false;
 // Обратотка формы поиска
 if (isset($_GET) && $_GET['search']) {
     $search = text_clean($_GET['search']);
-    $sql = "SELECT * FROM task WHERE MATCH(name) AGAINST ('$search')";
+    $sql = "SELECT * FROM task WHERE user_id='$user_id' AND MATCH(name) AGAINST ('$search')";
     $res = mysqli_query($con, $sql);
     $actual_tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
     if (empty($actual_tasks)) {
@@ -61,6 +62,47 @@ if (isset($_GET['project_id'])) {
 } elseif (empty($actual_tasks)) {
     $actual_tasks = user_tasks($user_id, 0, $con);
 }
+
+
+if (isset($_GET['tasks_switch'])) {
+    if (($_GET['tasks_switch']) === "all") {
+
+    }
+    if (($_GET['tasks_switch']) === "today") {
+      $cur_date = strtotime('today');
+      foreach ($actual_tasks as $key => $value) {
+          $value_date = strtotime($value['date_must_done']);
+          if ($value_date === $cur_date) {
+                $actual_tasks_cur[$key] = $value;
+          }
+      }
+      $actual_tasks = $actual_tasks_cur;
+    }
+    if (($_GET['tasks_switch']) === "tomorrow") {
+      $cur_date = strtotime('today + 1 day');
+      foreach ($actual_tasks as $key => $value) {
+          $value_date = strtotime($value['date_must_done']);
+          if ($value_date === $cur_date) {
+                $actual_tasks_cur[$key] = $value;
+          }
+      }
+      $actual_tasks = $actual_tasks_cur;
+    }
+    if (($_GET['tasks_switch']) === "lost") {
+      $cur_date = strtotime('today');
+      foreach ($actual_tasks as $key => $value) {
+          $value_date = strtotime($value['date_must_done']);
+          if ($value_date < $cur_date) {
+                $actual_tasks_cur[$key] = $value;
+          }
+      }
+      $actual_tasks = $actual_tasks_cur;
+    }
+}
+
+
+
+
 //конец обработки
 
 
@@ -78,6 +120,7 @@ $layout_content = include_template('layout.php', [
     'project_category' => $project_category,
     'tasks' => $tasks,
     'content' => $page_content,
+    'user_data' => $_SESSION,
     'title' => 'Главная страница'
 ]);
 

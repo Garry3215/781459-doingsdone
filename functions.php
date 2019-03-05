@@ -178,6 +178,8 @@ function db_insert_data($link, $sql, $data = []) {
     return $result;
 }
 
+
+// Возвращает дату из БД в человекопонятном формате
 function Date_DB_to_Man ($date) {
     if ($date !== null) {
         $result = strtotime($date);
@@ -188,7 +190,12 @@ function Date_DB_to_Man ($date) {
     return $result;
 }
 
+function getQueryWithParameters($params = []) {
+    $query = $_GET;
+    $query = array_merge($query, $params);
+    return http_build_query($query);
+}
 
-// 
+//
 
 ?>
