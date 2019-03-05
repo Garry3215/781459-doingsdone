@@ -38,7 +38,7 @@
                           </div>
 
                         <div class="user-menu__data">
-                            <p><?=$user_data['user_name']?></p>
+                            <p><?=$_SESSION['user_name']?></p>
                             <a href="logout.php">Выйти</a>
                         </div>
                     </div>

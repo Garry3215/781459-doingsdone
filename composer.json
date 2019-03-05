@@ -1,0 +1,13 @@
+{
+    "name": "ivanov/doingsdone",
+    "description": "project to study",
+    "authors": [
+        {
+            "name": "Igor Ivanov",
+            "email": "ivanov.unact@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.1"
+    }
+}

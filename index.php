@@ -1,5 +1,6 @@
 <?php
 require_once('functions.php');
+require_once('vendor/autoload.php');
 
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
