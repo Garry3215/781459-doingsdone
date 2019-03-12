@@ -5,25 +5,12 @@ require_once 'functions.php';
 $con = mysqli_connect("localhost", "root", "", "doingsdone");
 mysqli_set_charset($con, "utf8");
 if ($con == false) {
-print("Ошибка подключения: " . mysqli_connect_error());
+    print("Ошибка подключения: " . mysqli_connect_error());
 }
 
-$project_category = user_projects (1, $con);
+$project_category = user_projects(1, $con);
 $tasks = user_tasks(1, 0, $con);
 $actual_tasks = [];
-
-//обработка кликов по названиям проектов
-if (isset($_GET['project_id'])) {
-    $project_id = (int) $_GET['project_id'];
-    $actual_tasks = user_projects_cur($project_id, $con);
-    if (empty($actual_tasks)) {
-        http_response_code(404);
-        die('404 Not Found');
-    }
-} else {
-    $actual_tasks = user_tasks(1, 0, $con);
-}
-//конец обработки
 
 $wrong_data = [];
 $form_data = [];
@@ -54,9 +41,9 @@ if (isset($_POST['submit'])) {
         $form_data['name'] = mysqli_real_escape_string($con, $_POST['name']);
     }
     if (empty($wrong_data)) {
-      $sql = "insert into users (email, password, name) VALUES (?, ?, ?)";
-      $ins = db_insert_data($con, $sql, [$form_data['email'], $form_data['password'], $form_data['name']]);
-      header("Location:/index.php");
+        $sql = "insert into users (email, password, name) VALUES (?, ?, ?)";
+        $ins = db_insert_data($con, $sql, [$form_data['email'], $form_data['password'], $form_data['name']]);
+        header("Location:/index.php");
     }
 }
 
@@ -78,6 +65,3 @@ $layout_content = include_template('layout.php', [
   ]);
 
 print($layout_content);
-
-
-?>
