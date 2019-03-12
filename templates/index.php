@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <?php if (isset($_SESSION['user_id'])): ?>
 <h2 class="content__main-heading">Список задач</h2>
 
@@ -12,16 +10,16 @@
 <div class="tasks-controls">
     <nav class="tasks-switch">
 
-        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "all"]);?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "today"]);?>" class="tasks-switch__item">Повестка дня</a>
-        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "tomorrow"]);?>" class="tasks-switch__item">Завтра</a>
-        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "lost"]);?>" class="tasks-switch__item">Просроченные</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "all"]);?>" class="tasks-switch__item<?php if (isset($_GET['tasks_switch']) && $_GET['tasks_switch'] === "all"): ?> tasks-switch__item--active<?php endif; ?>">Все задачи</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "today"]);?>" class="tasks-switch__item<?php if (isset($_GET['tasks_switch']) && $_GET['tasks_switch'] === "today"): ?> tasks-switch__item--active<?php endif; ?>">Повестка дня</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "tomorrow"]);?>" class="tasks-switch__item<?php if (isset($_GET['tasks_switch']) && $_GET['tasks_switch'] === "tomorrow"): ?> tasks-switch__item--active<?php endif; ?>">Завтра</a>
+        <a href="/index.php?<?=getQueryWithParameters(['tasks_switch' => "lost"]);?>" class="tasks-switch__item<?php if (isset($_GET['tasks_switch']) && $_GET['tasks_switch'] === "lost"): ?> tasks-switch__item--active<?php endif; ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">
         <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
-            <?php if ($_GET['show_completed'] == 1): ?>
+            <?php if (isset($_GET['show_completed']) && $_GET['show_completed'] == 1): ?>
                 checked
             <?php else: ?>
 
@@ -36,11 +34,12 @@
   <?php if ($bad_search): ?>
   <p>Ничего не найдено по вашему запросу</p>
   <?php else: ?>
+    <?php if ($actual_tasks !== null): ?>
     <?php foreach ($actual_tasks as $key => $value): ?>
-      <?php if (isset($_GET) && $_GET['show_completed'] == 0 && $value['status'] == 1): ?>
+
+      <?php if ($show_check && $value['status'] == 1): ?>
 
       <?php else: ?>
-
         <tr class="tasks__item tasks <?php if ($value['done']): ?>task--completed<?php endif ?><?php if (date_check($value['date_must_done'])): ?>task--important<?php endif ?>">
           <td class="task__select">
             <form class="" id="<?=$value['id']; ?>" action="index.php" method="post" name="<?=$value['id']; ?>">
@@ -63,6 +62,7 @@
           </tr>
         <?php endif; ?>
     <?php endforeach; ?>
+    <?php endif; ?>
   <?php endif; ?>
 </table>
 

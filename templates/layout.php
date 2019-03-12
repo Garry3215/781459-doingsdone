@@ -17,7 +17,7 @@
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div class="container<?php if (isset($_SESSION['user_id'])): ?> container--with-sidebar<?php endif; ?>">
         <header class="main-header">
             <a href="/index.php">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -58,9 +58,9 @@
                     <ul class="main-navigation__list">
 
                         <?php foreach ($project_category as $key => $value): ?>
-                          <li class="main-navigation__list-item">
+                          <li class="main-navigation__list-item<?php if (isset($_GET['project_id']) && $_GET['project_id'] === $value['id']): ?> main-navigation__list-item--active<?php endif; ?>">
                               <a class="main-navigation__list-item-link" href="/index.php?project_id=<?=$value['id']?>"><?=$value['name'];?></a>
-                              <span class="main-navigation__list-item-count"><?php echo count_tasks($value['id'], $tasks) ?></span>
+                              <span class="main-navigation__list-item-count"><?php echo count(user_projects_cur($_SESSION['user_id'], $value['id'], $con)); ?></span>
 
                           </li>
                         <?php endforeach; ?>

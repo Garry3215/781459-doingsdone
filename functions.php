@@ -39,7 +39,7 @@ function count_tasks($project_name, $tasks)
 /**
 * проверяет дату задачи для пометки тегом ""горящих" задач в разметке
 * -17 с лишним тысяч - временная метка для текста
-* @param timestamp дата текущей задачи
+* @param timestamp $project_date дата текущей задачи
 *
 * @return boolean true, если срок задачи истекает сегодня или завтра
 */
@@ -62,14 +62,14 @@ function date_check($project_date)
 
 /**
 * получение списка проектов у текущего пользователя
-* @param integer ID текушего пользователя
-* @param misqli ресурс соединения
+* @param integer $user_id ID текушего пользователя
+* @param misqli $con ресурс соединения
 *
 * @return array Список проектов текущего пользователя
 */
 function user_projects($user_id, $con)
 {
-    if ($user_id == 0) {
+    if ($user_id === 0) {
         $user_projects = [];
     } else {
         $sql = "select * from project where user_id = ";
@@ -87,9 +87,9 @@ function user_projects($user_id, $con)
 /**
 * получение списка из всех задач у текущего пользователя
 *
-* @param integer ID текущего пользователя
-* @param integer ID текушего проекта
-* @param misqli ресурс соединения
+* @param integer $user_id ID текущего пользователя
+* @param integer $project_id ID текушего проекта
+* @param mysqli $con ресурс соединения
 *
 * @return array проекты текущего пользователя
 */
@@ -120,9 +120,9 @@ function user_tasks($user_id, $project_id, $con)
 /**
 * получение списка задач по клику на название проекта
 *
-* @param integer ID текущего пользователя
-* @param integer ID текушего проекта
-* @param misqli ресурс соединения
+* @param integer $user_id ID текущего пользователя
+* @param integer $project_id ID текушего проекта
+* @param misqli $con ресурс соединения
 *
 * @return array проекты текущего пользователя, выбранные по клику на ссылку проекта
 */
@@ -139,7 +139,13 @@ function user_projects_cur($user_id, $project_id, $con)
     return [];
 }
 
-//проверка текста и защита от инъекций
+/**
+* проверка текста и защита от инъекций
+*
+* @param string $text Выражение, которое нужно очистить
+*
+* @return string Очищенное выражение
+*/
 function text_clean($text)
 {
     $text = trim($text);
@@ -195,9 +201,9 @@ function db_get_prepare_stmt($link, $sql, $data = [])
 /**
 * Получает данные из БД
 *
-* @param misqli ресурс соединения
-* @param string SQL запрос
-* @param array данные для подготовленного выражения
+* @param misqli $link ресурс соединения
+* @param string $sql SQL запрос
+* @param array $data данные для подготовленного выражения
 *
 * @return array данные полученного запроса
 */
@@ -216,9 +222,9 @@ function db_fetch_data($link, $sql, $data = [])
 /**
 * Записывает данные в БД
 *
-* @param misqli ресурс соединения
-* @param string SQL запрос
-* @param array данные для подготовленного выражения
+* @param misqli $link ресурс соединения
+* @param string $sql SQL запрос
+* @param array $data данные для подготовленного выражения
 *
 * @return array ID последней записи
 */
@@ -235,7 +241,7 @@ function db_insert_data($link, $sql, $data = [])
 /**
 * Возвращает дату из БД в человекопонятном формате
 *
-* @param timestamp дата задачи из БД
+* @param timestamp $date дата задачи из БД
 *
 * @return date Дата в формате "ДД-ММ-ГГГГ"
 */
@@ -253,7 +259,7 @@ function Date_DB_to_Man($date)
 /**
 * Формирует URL из $_GET и переданные параметров запроса
 *
-* @param array Данные для параметра запроса
+* @param array $params Данные для параметра запроса
 *
 * @return string URL для подстановки
 */

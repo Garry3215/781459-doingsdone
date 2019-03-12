@@ -1,31 +1,15 @@
 <?php
-require_once 'functions.php';
-require_once 'vendor/autoload.php';
-
-$con = mysqli_connect("localhost", "root", "", "doingsdone");
-mysqli_set_charset($con, "utf8");
-if ($con == false) {
-    echo 'Ошибка подключения: ' . mysqli_connect_error();
-}
-
-session_start();
-
-
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = 0;
-}
+require_once 'init.php';
 
 $cur_date = strtotime('today');
 $cur_date = date("Y-m-d H:i:s", $cur_date);
-$sql = "SELECT * FROM task WHERE status = 0 AND user_id = '$user_id' AND date_must_done = '$cur_date'";
+$sql = "SELECT * FROM task WHERE status = 0 AND date_must_done = '$cur_date'";
 $res = mysqli_query($con, $sql);
 $result = mysqli_fetch_assoc($res);
 $number = mysqli_num_rows($res);
+$today_task_name = null;
+$today_task_date = null;
 if ($number > 0) {
-    $today_task_name = null;
-    $today_task_date = null;
     foreach ($res as $key => $value) {
         if ($today_task_name === null) {
             $today_task_name = $value['name'];
@@ -49,4 +33,6 @@ $message->setBody("Сегодня истекает срок исполнения
 $message->setFrom("keks@phpdemo.ru", "htmlacademy");
 
 $mailer = new Swift_Mailer($transport);
-$mailer->send($message);
+if (!empty($today_task_name)) {
+    $mailer->send($message);
+}
