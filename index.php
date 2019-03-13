@@ -45,7 +45,6 @@ if (isset($_GET['project_id'])) {
     $actual_tasks = user_projects_cur($user_id, $project_id, $con);
     if (empty($actual_tasks)) {
         http_response_code(404);
-        die('404 Not Found');
     }
 } elseif (empty($actual_tasks)) {
     $actual_tasks = user_tasks($user_id, 0, $con);
@@ -53,8 +52,8 @@ if (isset($_GET['project_id'])) {
 
 
 if (isset($_GET['tasks_switch'])) {
-    if (($_GET['tasks_switch']) === "all") {
-    }
+/*    if (($_GET['tasks_switch']) === "all") {
+}*/
     if (($_GET['tasks_switch']) === "today") {
         $actual_tasks_cur = [];
         $cur_date = strtotime('today');

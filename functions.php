@@ -95,7 +95,7 @@ function user_projects($user_id, $con)
 */
 function user_tasks($user_id, $project_id, $con)
 {
-    if ($user_id == 0) {
+    if ($user_id === 0) {
         $user_projects = [];
     } else {
         if ($project_id === 0) {
