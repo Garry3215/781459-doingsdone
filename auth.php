@@ -1,13 +1,7 @@
 <?php
-require_once 'functions.php';
+require_once 'init.php';
+require_once 'session.php';
 
-$con = mysqli_connect("localhost", "root", "", "doingsdone");
-mysqli_set_charset($con, "utf8");
-if ($con == false) {
-    echo 'Ошибка подключения: ' . mysqli_connect_error();
-}
-
-session_start();
 $_SESSION = [];
 
 $project_category = user_projects(1, $con);
@@ -58,7 +52,6 @@ if (isset($_POST['submit'])) {
 $page_content = include_template('auth.php', [
     'tasks' => $tasks,
     'actual_tasks' => $actual_tasks,
-    'show_complete_tasks' => $show_complete_tasks,
     'wrong_data' => $wrong_data
 ]);
 

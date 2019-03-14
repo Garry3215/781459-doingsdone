@@ -1,5 +1,6 @@
 <?php
 require_once 'init.php';
+require_once 'session.php';
 
 $project_category = user_projects($user_id, $con);
 $tasks = user_tasks($user_id, 0, $con);
@@ -27,7 +28,6 @@ if (isset($_GET) && isset($_GET['search'])) {
         $sql = "SELECT status FROM task WHERE id = '$task_id'";
         $res = mysqli_query($con, $sql);
         $task_status = mysqli_fetch_assoc($res);
-        var_dump($task_status);
         if ($task_status['status'] === '0') {
             $sql = "UPDATE task SET status = '1' WHERE id = '$task_id'";
         } else {
@@ -80,7 +80,7 @@ if (isset($_GET['tasks_switch'])) {
         $cur_date = strtotime('today');
         foreach ($actual_tasks as $key => $value) {
             $value_date = strtotime($value['date_must_done']);
-            if ($value_date < $cur_date) {
+            if (!empty($value_date) && $value_date < $cur_date) {
                 $actual_tasks_cur[$key] = $value;
             }
         }

@@ -1,5 +1,6 @@
 <?php
 require_once 'init.php';
+require_once 'session.php';
 
 $wrong_data = [];
 $project_category = user_projects($user_id, $con);

@@ -1,12 +1,6 @@
 <?php
-error_reporting(E_ALL);
-require_once 'functions.php';
-
-$con = mysqli_connect("localhost", "root", "", "doingsdone");
-mysqli_set_charset($con, "utf8");
-if ($con == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
-}
+require_once 'init.php';
+require_once 'session.php';
 
 $project_category = user_projects(1, $con);
 $tasks = user_tasks(1, 0, $con);

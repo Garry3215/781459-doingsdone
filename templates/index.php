@@ -19,7 +19,7 @@
     <label class="checkbox">
         <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
-            <?php if (isset($_GET['show_completed']) && $_GET['show_completed'] == 1): ?>
+            <?php if (isset($_GET['show_completed']) && $_GET['show_completed'] === '1'): ?>
                 checked
             <?php else: ?>
 
@@ -45,7 +45,7 @@
             <form class="" id="<?=$value['id']; ?>" action="index.php" method="post" name="<?=$value['id']; ?>">
               <label class="checkbox task__checkbox">
                 <input class="checkbox__input visually-hidden" name="<?=$value['id']; ?>" type="checkbox" <?php if ($value['status'] === '1'): ?>checked<?php endif ?> onchange="this.form.submit()">
-                <span class="checkbox__text"><?=$value['name']; ?></span>
+                <span class="checkbox__text"><?=htmlspecialchars($value['name']); ?></span>
               </label>
               <input class="visually-hidden" type="text" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
               <input class="visually-hidden" type="submit" id="<?=$value['id']; ?>" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
@@ -53,7 +53,7 @@
           </td>
           <?php if (isset($value['file'])): ?>
             <td class="task__file">
-                <a class="download-link" href="<?=$value['file']; ?>"><?=basename($value['file']); ?></a>
+                <a class="download-link" href="<?=htmlspecialchars($value['file']); ?>"><?=basename($value['file']); ?></a>
             </td>
           <?php endif; ?>
 

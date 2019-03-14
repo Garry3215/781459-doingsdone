@@ -1,5 +1,6 @@
 <?php
 require_once 'init.php';
+require_once 'session.php';
 
 $form_data = [];
 $wrong_data = [];
