@@ -39,14 +39,14 @@ function count_tasks($project_name, $tasks)
 /**
 * проверяет дату задачи для пометки тегом ""горящих" задач в разметке
 * -17 с лишним тысяч - временная метка для текста
-* @param timestamp $project_date дата текущей задачи
+* @param string $project_date дата текущей задачи
 *
 * @return boolean true, если срок задачи истекает сегодня или завтра
 */
 function date_check($project_date)
 {
     $cur_date = strtotime("now");
-    $pr_date = strtotime($project_date);
+    $pr_date = strtotime($project_date . '+1 day');
     $diff = $pr_date - $cur_date;
     $diff = $diff / 86400;
 
@@ -63,7 +63,7 @@ function date_check($project_date)
 /**
 * получение списка проектов у текущего пользователя
 * @param integer $user_id ID текушего пользователя
-* @param misqli $con ресурс соединения
+* @param mysqli $con ресурс соединения
 *
 * @return array Список проектов текущего пользователя
 */
@@ -122,7 +122,7 @@ function user_tasks($user_id, $project_id, $con)
 *
 * @param integer $user_id ID текущего пользователя
 * @param integer $project_id ID текушего проекта
-* @param misqli $con ресурс соединения
+* @param mysqli $con ресурс соединения
 *
 * @return array проекты текущего пользователя, выбранные по клику на ссылку проекта
 */
@@ -201,7 +201,7 @@ function db_get_prepare_stmt($link, $sql, $data = [])
 /**
 * Получает данные из БД
 *
-* @param misqli $link ресурс соединения
+* @param mysqli $link ресурс соединения
 * @param string $sql SQL запрос
 * @param array $data данные для подготовленного выражения
 *
@@ -222,7 +222,7 @@ function db_fetch_data($link, $sql, $data = [])
 /**
 * Записывает данные в БД
 *
-* @param misqli $link ресурс соединения
+* @param mysqli $link ресурс соединения
 * @param string $sql SQL запрос
 * @param array $data данные для подготовленного выражения
 *
@@ -241,9 +241,9 @@ function db_insert_data($link, $sql, $data = [])
 /**
 * Возвращает дату из БД в человекопонятном формате
 *
-* @param timestamp $date дата задачи из БД
+* @param string $date дата задачи из БД
 *
-* @return date Дата в формате "ДД-ММ-ГГГГ"
+* @return string Дата в формате "ДД-ММ-ГГГГ"
 */
 function Date_DB_to_Man($date)
 {
