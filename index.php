@@ -5,7 +5,7 @@ $project_category = user_projects($user_id, $con);
 $tasks = user_tasks($user_id, 0, $con);
 $actual_tasks = [];
 $bad_search = false;
-$show_check = false;
+$show_check = true;
 
 // Обратотка формы поиска
 if (isset($_GET) && isset($_GET['search'])) {
@@ -20,22 +20,23 @@ if (isset($_GET) && isset($_GET['search'])) {
 // Конец обратоткт формы поиска
 
 // обработка ЧекБокса "выполненная задача"
-if (!empty($_POST)) {
+//if (!empty($_POST)) {
     $task_id = array_keys($_POST);
     if (!empty($task_id)) {
         $task_id = $task_id[0];
         $sql = "SELECT status FROM task WHERE id = '$task_id'";
         $res = mysqli_query($con, $sql);
         $task_status = mysqli_fetch_assoc($res);
-        if ($task_status['status'] === 0) {
-            $sql = "UPDATE task SET status = 1 WHERE id = '$task_id'";
+        var_dump($task_status);
+        if ($task_status['status'] === '0') {
+            $sql = "UPDATE task SET status = '1' WHERE id = '$task_id'";
         } else {
-            $sql = "UPDATE task SET status = 0 WHERE id = '$task_id'";
+            $sql = "UPDATE task SET status = '0' WHERE id = '$task_id'";
         }
         $res = mysqli_query($con, $sql);
     }
 
-}
+//}
 // конец обработки ЧекБокса "выполненная задача"
 
 //обработка кликов по названиям проектов
@@ -52,8 +53,6 @@ if (isset($_GET['project_id'])) {
 
 
 if (isset($_GET['tasks_switch'])) {
-/*    if (($_GET['tasks_switch']) === "all") {
-}*/
     if (($_GET['tasks_switch']) === "today") {
         $actual_tasks_cur = [];
         $cur_date = strtotime('today');
@@ -90,8 +89,8 @@ if (isset($_GET['tasks_switch'])) {
 }
 
 if (isset($_GET['show_completed'])) {
-    if ($_GET['show_completed'] === 0) {
-        $show_check = true;
+    if ($_GET['show_completed'] === '1') {
+        $show_check = false;
     }
 }
 

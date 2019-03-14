@@ -64,6 +64,9 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+    if (empty($form_project)) {
+        header("Location:/index.php");
+    }
     if (empty($wrong_data)) {
         if ($file_path === null && $form_date !== null) {
             $sql = "insert into task (user_id, project_id, status, name, date_must_done) VALUES (?, ?, 0, ?, ?)";
