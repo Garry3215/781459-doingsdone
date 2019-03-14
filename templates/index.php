@@ -37,28 +37,29 @@
     <?php if ($actual_tasks !== null): ?>
     <?php foreach ($actual_tasks as $key => $value): ?>
 
-      <?php if ($show_check && $value['status'] == 1): ?>
+        <?php if ($show_check && $value['status'] === '1'): ?>
 
       <?php else: ?>
         <tr class="tasks__item tasks <?php if ($value['done']): ?>task--completed<?php endif ?><?php if (date_check($value['date_must_done'])): ?>task--important<?php endif ?>">
           <td class="task__select">
             <form class="" id="<?=$value['id']; ?>" action="index.php" method="post" name="<?=$value['id']; ?>">
               <label class="checkbox task__checkbox">
-                <input class="checkbox__input visually-hidden" name="<?=$value['id']; ?>" type="checkbox" <?php if ($value['status'] == 1): ?>checked<?php endif ?> onchange="this.form.submit()">
+                <input class="checkbox__input visually-hidden" name="<?=$value['id']; ?>" type="checkbox" <?php if ($value['status'] === '1'): ?>checked<?php endif ?> onchange="this.form.submit()">
                 <span class="checkbox__text"><?=$value['name']; ?></span>
               </label>
               <input class="visually-hidden" type="text" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
               <input class="visually-hidden" type="submit" id="<?=$value['id']; ?>" name="<?=$value['id']; ?>" value="<?=$value['id']; ?>">
             </form>
           </td>
-          <td class="task__date"><?=Date_DB_to_Man($value['date_must_done']); ?></td>
           <?php if (isset($value['file'])): ?>
             <td class="task__file">
                 <a class="download-link" href="<?=$value['file']; ?>"><?=basename($value['file']); ?></a>
             </td>
           <?php endif; ?>
 
-          <td class="task__controls">
+          <td class="task__controls"></td>
+          <td class="task__date"><?=Date_DB_to_Man($value['date_must_done']); ?></td>
+
           </tr>
         <?php endif; ?>
     <?php endforeach; ?>
