@@ -15,7 +15,7 @@
 
         <input class="form__input <?php if (isset($wrong_data['email'])): ?>form__input--error<?php endif; ?>" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
         <?php if (isset($wrong_data['email'])): ?>
-        <p class="form__message"><?=htmlspecialchars($wrong_data['email'])?></p>
+        <p class="form__message"><?=$wrong_data['email']?></p>
         <?php endif; ?>
       </div>
 
@@ -24,12 +24,12 @@
 
         <input class="form__input <?php if (isset($wrong_data['password'])): ?>form__input--error<?php endif; ?>" type="password" name="password" id="password" value="" placeholder="Введите пароль">
         <?php if (isset($wrong_data['password'])): ?>
-        <p class="form__message"><?=htmlspecialchars($wrong_data['password'])?></p>
+        <p class="form__message"><?=$wrong_data['password']?></p>
         <?php endif; ?>
       </div>
 
       <?php if (!empty($wrong_data['auth'])): ?>
-      <p class="error-message"><?=htmlspecialchars($wrong_data['auth']); ?></p>
+      <p class="error-message"><?=$wrong_data['auth']; ?></p>
       <?php endif; ?>
 
       <div class="form__row form__row--controls">

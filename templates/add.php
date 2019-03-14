@@ -8,7 +8,7 @@
 
         <input class="form__input<?php if (isset($wrong_data['name'])): ?> form__input--error<?php endif ?>" type="text" name="name" id="name" value="<?=(htmlspecialchars($form_data['name'])) ?? ''?>" placeholder="Введите название">
         <?php if (isset($wrong_data['name'])): ?>
-            <p class="form__message"><?=htmlspecialchars($wrong_data['name']);?></p>
+            <p class="form__message"><?=$wrong_data['name'];?></p>
         <?php endif ?>
 
       </div>
@@ -28,7 +28,7 @@
 
         <input class="form__input form__input--date<?php if (isset($wrong_data['date'])): ?> form__input--error<?php endif ?>" type="date" name="date" id="date" value="<?=(htmlspecialchars($form_data['date'])) ?? ''?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
         <?php if (isset($wrong_data['date'])): ?>
-            <p class="form__message"><?=htmlspecialchars($wrong_data['date']);?></p>
+            <p class="form__message"><?=$wrong_data['date'];?></p>
         <?php endif ?>
       </div>
 
@@ -42,7 +42,7 @@
             <span>Выберите файл</span>
           </label>
           <?php if (isset($wrong_data['file'])): ?>
-              <p class="form__message"><?=htmlspecialchars($wrong_data['file']);?></p>
+              <p class="form__message"><?=$wrong_data['file'];?></p>
           <?php endif ?>
         </div>
       </div>

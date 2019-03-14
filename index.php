@@ -21,10 +21,9 @@ if (isset($_GET) && isset($_GET['search'])) {
 // Конец обратоткт формы поиска
 
 // обработка ЧекБокса "выполненная задача"
-//if (!empty($_POST)) {
     $task_id = array_keys($_POST);
     if (!empty($task_id)) {
-        $task_id = $task_id[0];
+        $task_id = (int) $task_id[0];
         $sql = "SELECT status FROM task WHERE id = '$task_id'";
         $res = mysqli_query($con, $sql);
         $task_status = mysqli_fetch_assoc($res);
@@ -35,8 +34,6 @@ if (isset($_GET) && isset($_GET['search'])) {
         }
         $res = mysqli_query($con, $sql);
     }
-
-//}
 // конец обработки ЧекБокса "выполненная задача"
 
 //обработка кликов по названиям проектов
