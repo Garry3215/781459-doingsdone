@@ -6,7 +6,7 @@
       <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
 
-        <input class="form__input<?php if (isset($wrong_data['name'])): ?> form__input--error<?php endif ?>" type="text" name="name" id="name" value="<?=(htmlspecialchars($form_data['name'])) ?? ''?>" placeholder="Введите название">
+        <input class="form__input<?php if (isset($wrong_data['name'])): ?> form__input--error<?php endif ?>" type="text" name="name" id="name" value="<?=isset($form_data['name']) ? htmlspecialchars($form_data['name']) : ''?>" placeholder="Введите название">
         <?php if (isset($wrong_data['name'])): ?>
             <p class="form__message"><?=$wrong_data['name'];?></p>
         <?php endif ?>
@@ -26,7 +26,7 @@
       <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
 
-        <input class="form__input form__input--date<?php if (isset($wrong_data['date'])): ?> form__input--error<?php endif ?>" type="date" name="date" id="date" value="<?=(htmlspecialchars($form_data['date'])) ?? ''?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+        <input class="form__input form__input--date<?php if (isset($wrong_data['date'])): ?> form__input--error<?php endif ?>" type="date" name="date" id="date" value="<?=isset($form_data['date']) ? htmlspecialchars($form_data['date']) : ''?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
         <?php if (isset($wrong_data['date'])): ?>
             <p class="form__message"><?=$wrong_data['date'];?></p>
         <?php endif ?>
