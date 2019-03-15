@@ -21,7 +21,7 @@
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
-        <input class="form__input <?php if (isset($wrong_data['password'])): ?>form__input--error<?php endif; ?>" type="password" name="password" id="password" value="<?=isset($form_data['name']) ? htmlspecialchars($form_data['password']) : ''?>" placeholder="Введите пароль">
+        <input class="form__input <?php if (isset($wrong_data['password'])): ?>form__input--error<?php endif; ?>" type="password" name="password" id="password" value="<?=isset($form_data['password']) ? htmlspecialchars($form_data['password']) : ''?>" placeholder="Введите пароль">
         <?php if (isset($wrong_data['password'])): ?>
         <p class="form__message"><?=$wrong_data['password']?></p>
         <?php endif; ?>
